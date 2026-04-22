@@ -49,12 +49,12 @@
             </div>
         </div>
 
-        <button type="button" onclick="window.location.href='/complaints/my-complaints'" class="w-full bg-[#30BF62] text-white hover:bg-[#188C4A] rounded-xl px-4 py-3 font-bold transition duration-200 mt-4 shadow-md">
+        <button type="button" onclick="window.location.href='{{ route('complaints.my') }}'" class="w-full bg-[#30BF62] text-white hover:bg-[#188C4A] rounded-xl px-4 py-3 font-bold transition duration-200 mt-4 shadow-md">
             Submit Complaint
         </button>
         
         <div class="text-center mt-4">
-            <a href="/complaints/my-complaints" class="text-sm text-gray-500 hover:text-[#012619]">Cancel</a>
+            <a href="{{ route('complaints.my') }}" class="text-sm text-gray-500 hover:text-[#012619]">Cancel</a>
         </div>
     </form>
 </div>

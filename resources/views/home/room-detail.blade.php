@@ -7,9 +7,9 @@
         
         <!-- Breadcrumb -->
         <nav class="mb-6 text-sm">
-            <a href="/" class="text-gray-500 hover:text-[#035949]">Home</a>
+            <a href="{{ route('home') }}" class="text-gray-500 hover:text-[#035949]">Home</a>
             <span class="mx-2 text-gray-400">/</span>
-            <a href="/rooms" class="text-gray-500 hover:text-[#035949]">Rooms</a>
+            <a href="{{ route('rooms') }}" class="text-gray-500 hover:text-[#035949]">Rooms</a>
             <span class="mx-2 text-gray-400">/</span>
             <span class="text-[#012619] font-medium">VIP Room Suite</span>
         </nav>
@@ -67,12 +67,12 @@
                 <div class="bg-white rounded-2xl shadow-md p-6 sticky top-24">
                     <div class="mb-6">
                         <span class="block text-sm text-gray-500 mb-1">Price</span>
-                        <div class="text-3xl font-extrabold text-[#30BF62]">Rp 2,500,000<span class="text-sm font-normal text-gray-500">/mo</span></div>
+                        <div class="text-3xl font-extrabold text-[#30BF62]">Rp 500,000<span class="text-sm font-normal text-gray-500">/mo</span></div>
                     </div>
 
                     <hr class="border-gray-100 mb-6">
 
-                    <form action="/booking/create" method="GET" class="space-y-4">
+                    <form action="{{ route('booking.create') }}" method="GET" class="space-y-4">
                         <div>
                             <label class="block text-sm font-medium text-gray-700 mb-1">Check-in Date</label>
                             <input type="date" class="w-full border border-gray-300 rounded-xl px-4 py-2 focus:ring-[#30BF62] focus:border-[#30BF62]">
@@ -87,7 +87,7 @@
                             </select>
                         </div>
 
-                        <button type="button" onclick="window.location.href='/booking/create'" class="w-full bg-[#30BF62] text-white py-3 rounded-xl font-bold text-lg hover:bg-[#188C4A] shadow-md hover:shadow-lg transition duration-200 mt-6">
+                        <button type="button" onclick="window.location.href='{{ route('booking.create') }}'" class="w-full bg-[#30BF62] text-white py-3 rounded-xl font-bold text-lg hover:bg-[#188C4A] shadow-md hover:shadow-lg transition duration-200 mt-6">
                             Book Now
                         </button>
                     </form>

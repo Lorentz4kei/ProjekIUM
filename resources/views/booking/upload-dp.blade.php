@@ -62,12 +62,12 @@
                         </div>
                     </div>
                     
-                    <button type="button" onclick="window.location.href='/booking/confirmation'" class="w-full bg-[#30BF62] text-white py-3 rounded-xl font-bold hover:bg-[#188C4A] transition shadow-md mt-4">
+                    <button type="button" onclick="window.location.href='{{ route('booking.confirmation') }}'" class="w-full bg-[#30BF62] text-white py-3 rounded-xl font-bold hover:bg-[#188C4A] transition shadow-md mt-4">
                         Submit Payment Proof
                     </button>
                     
                     <div class="text-center mt-4">
-                        <a href="/booking/create" class="text-sm text-gray-500 hover:text-[#012619]">Cancel or Go Back</a>
+                        <a href="{{ route('booking.create') }}" class="text-sm text-gray-500 hover:text-[#012619]">Cancel or Go Back</a>
                     </div>
                 </div>
             </div>

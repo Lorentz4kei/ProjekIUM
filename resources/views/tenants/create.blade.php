@@ -6,7 +6,7 @@
 <div class="max-w-4xl bg-white rounded-2xl shadow-md p-6 sm:p-8">
     <div class="mb-6 flex items-center justify-between border-b border-gray-100 pb-4">
         <h2 class="text-xl font-bold text-[#012619]">Tenant Form</h2>
-        <a href="/tenants" class="text-gray-400 hover:text-gray-600 transition"><svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" /></svg></a>
+        <a href="{{ route('tenants.index') }}" class="text-gray-400 hover:text-gray-600 transition"><svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" /></svg></a>
     </div>
 
     <form action="#" class="space-y-8">
@@ -79,7 +79,7 @@
 
         <div class="flex justify-end gap-3 pt-4">
             <button type="button" onclick="window.history.back()" class="border border-gray-300 bg-white text-gray-700 hover:bg-gray-50 rounded-xl px-5 py-2 font-medium transition duration-200">Cancel</button>
-            <button type="button" onclick="window.location.href='/tenants'" class="bg-[#30BF62] text-white hover:bg-[#188C4A] rounded-xl px-5 py-2 font-medium transition duration-200 shadow-sm">Save Tenant</button>
+            <button type="button" onclick="window.location.href='{{ route('tenants.index') }}'" class="bg-[#30BF62] text-white hover:bg-[#188C4A] rounded-xl px-5 py-2 font-medium transition duration-200 shadow-sm">Save Tenant</button>
         </div>
     </form>
 </div>

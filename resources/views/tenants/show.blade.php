@@ -4,7 +4,7 @@
 
 @section('content')
 <div class="mb-4">
-    <a href="/tenants" class="text-sm font-medium text-gray-500 hover:text-[#012619] inline-flex items-center">
+    <a href="{{ route('tenants.index') }}" class="text-sm font-medium text-gray-500 hover:text-[#012619] inline-flex items-center">
         <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18" /></svg> Back to Tenants
     </a>
 </div>
@@ -35,7 +35,7 @@
         <div class="bg-white rounded-2xl shadow-md p-6">
             <h3 class="font-bold text-[#012619] mb-4 border-b border-gray-100 pb-2">Document Proof</h3>
             <img src="https://placehold.co/300x180/e2e8f0/475569?text=KTP+Photo" alt="KTP" class="w-full rounded-xl cursor-pointer hover:opacity-80 transition object-cover border border-gray-200">
-            <a href="/tenants/contract" target="_blank" class="block text-center mt-4 border border-[#035949] text-[#035949] hover:bg-[#035949] hover:text-white rounded-xl px-4 py-2 text-sm font-medium transition duration-200 w-full">View Contract PDF</a>
+            <a href="{{ route('tenants.contract') }}" target="_blank" class="block text-center mt-4 border border-[#035949] text-[#035949] hover:bg-[#035949] hover:text-white rounded-xl px-4 py-2 text-sm font-medium transition duration-200 w-full">View Contract PDF</a>
         </div>
     </div>
 
@@ -44,7 +44,7 @@
         <div class="bg-white rounded-2xl shadow-md p-6">
             <div class="flex justify-between items-center mb-6 pb-2 border-b border-gray-100">
                 <h3 class="font-bold text-[#012619] text-lg">Personal Information</h3>
-                <a href="/tenants/1/edit" class="text-sm font-medium text-[#188C4A] hover:text-[#035949] transition">Edit</a>
+                <a href="{{ route('tenants.edit', 1) }}" class="text-sm font-medium text-[#188C4A] hover:text-[#035949] transition">Edit</a>
             </div>
             
             <div class="grid grid-cols-1 sm:grid-cols-2 gap-y-6 gap-x-12">

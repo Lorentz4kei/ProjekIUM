@@ -9,7 +9,7 @@
             <h1 class="text-2xl font-bold text-[#012619]">My Complaints</h1>
             <p class="text-gray-500 text-sm mt-1">Track the status of your reported issues here.</p>
         </div>
-        <a href="/complaints/create" class="bg-[#30BF62] text-white hover:bg-[#188C4A] rounded-xl px-4 py-2 text-sm font-bold transition shadow-sm w-full sm:w-auto text-center">
+        <a href="{{ route('complaints.create') }}" class="bg-[#30BF62] text-white hover:bg-[#188C4A] rounded-xl px-4 py-2 text-sm font-bold transition shadow-sm w-full sm:w-auto text-center">
             + New Complaint
         </a>
     </div>

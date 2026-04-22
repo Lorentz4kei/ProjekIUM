@@ -5,7 +5,7 @@
 @section('content')
 <div class="max-w-3xl mx-auto space-y-6">
     <div class="mb-4">
-        <a href="/profile" class="text-sm font-medium text-gray-500 hover:text-[#012619] inline-flex items-center">
+        <a href="{{ route('profile.index') }}" class="text-sm font-medium text-gray-500 hover:text-[#012619] inline-flex items-center">
             <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18" /></svg> Back to Profile
         </a>
     </div>
@@ -62,7 +62,7 @@
         </div>
 
         <div class="flex justify-end gap-3 pt-2">
-            <button type="button" onclick="window.location.href='/profile'" class="border border-gray-300 bg-white text-gray-700 hover:bg-gray-50 rounded-xl px-6 py-2.5 font-medium transition duration-200">Cancel</button>
+            <button type="button" onclick="window.location.href='{{ route('profile.index') }}'" class="border border-gray-300 bg-white text-gray-700 hover:bg-gray-50 rounded-xl px-6 py-2.5 font-medium transition duration-200">Cancel</button>
             <button type="button" class="bg-[#30BF62] text-white hover:bg-[#188C4A] rounded-xl px-6 py-2.5 font-bold transition duration-200 shadow-md">Save Changes</button>
         </div>
     </form>

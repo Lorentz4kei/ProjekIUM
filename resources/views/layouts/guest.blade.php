@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>@yield('title', 'Welcome to e-Kost')</title>
+    <link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <style>
         body { font-family: 'Inter', sans-serif; background-color: #F2F2F2; color: #1a1a1a; }
@@ -28,10 +29,10 @@
                 
                 <!-- Links (Desktop) -->
                 <div class="hidden sm:flex sm:space-x-8 items-center">
-                    <a href="#" class="text-gray-500 hover:text-[#035949] px-3 py-2 rounded-md font-medium transition duration-200">Rooms</a>
+                    <a href="{{ route('rooms') }}" class="text-gray-500 hover:text-[#035949] px-3 py-2 rounded-md font-medium transition duration-200">Rooms</a>
                     <a href="#" class="text-gray-500 hover:text-[#035949] px-3 py-2 rounded-md font-medium transition duration-200">Facilities</a>
                     <a href="#" class="text-gray-500 hover:text-[#035949] px-3 py-2 rounded-md font-medium transition duration-200">Contact</a>
-                    <a href="#" class="text-[#035949] border border-[#035949] hover:bg-[#035949] hover:text-white px-4 py-2 rounded-xl font-medium transition duration-200">Login</a>
+                    <a href="{{ route('login') }}" class="text-[#035949] border border-[#035949] hover:bg-[#035949] hover:text-white px-4 py-2 rounded-xl font-medium transition duration-200">Login</a>
                 </div>
 
                 <!-- Mobile Menu Button -->
@@ -52,7 +53,13 @@
     <main class="flex-grow w-full">
         @yield('content')
     </main>
-
+ <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
+    <script>
+        AOS.init({
+            duration: 800,
+            once: true
+        });
+    </script>
     <!-- Footer -->
     @include('partials.footer')
 </body>

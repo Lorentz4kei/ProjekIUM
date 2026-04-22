@@ -22,7 +22,7 @@
         </h3>
         
         <div class="space-y-4 overflow-y-auto pr-1">
-            <a href="/complaints/1" class="block bg-white border-l-4 border-red-500 rounded-xl shadow-sm p-4 hover:shadow-md transition">
+            <a href="{{ route('complaints.show', 1) }}" class="block bg-white border-l-4 border-red-500 rounded-xl shadow-sm p-4 hover:shadow-md transition">
                 <div class="flex justify-between items-start mb-2">
                     <span class="text-xs font-bold text-gray-500">Room 102</span>
                     <span class="text-xs text-gray-400">2 hours ago</span>
@@ -31,7 +31,7 @@
                 <p class="text-xs text-gray-500 line-clamp-2">The AC has been running for 3 hours but the room is still very hot. Water is dripping.</p>
             </a>
             
-            <a href="/complaints/1" class="block bg-white border-l-4 border-yellow-500 rounded-xl shadow-sm p-4 hover:shadow-md transition">
+            <a href="{{ route('complaints.show', 1) }}" class="block bg-white border-l-4 border-yellow-500 rounded-xl shadow-sm p-4 hover:shadow-md transition">
                 <div class="flex justify-between items-start mb-2">
                     <span class="text-xs font-bold text-gray-500">Room 205</span>
                     <span class="text-xs text-gray-400">1 day ago</span>
@@ -48,7 +48,7 @@
             In Progress <span class="bg-blue-500 text-white text-xs px-2 py-0.5 rounded-full">1</span>
         </h3>
         <div class="space-y-4 overflow-y-auto pr-1">
-            <a href="/complaints/1" class="block bg-white border-l-4 border-blue-500 rounded-xl shadow-sm p-4 hover:shadow-md transition">
+            <a href="{{ route('complaints.show', 1) }}" class="block bg-white border-l-4 border-blue-500 rounded-xl shadow-sm p-4 hover:shadow-md transition">
                 <div class="flex justify-between items-start mb-2">
                     <span class="text-xs font-bold text-gray-500">Room 101</span>
                     <span class="text-xs text-gray-400">2 days ago</span>
@@ -66,7 +66,7 @@
             Resolved <span class="bg-[#30BF62] text-white text-xs px-2 py-0.5 rounded-full">12</span>
         </h3>
         <div class="space-y-4 overflow-y-auto pr-1">
-            <a href="/complaints/1" class="block bg-white border-l-4 border-[#30BF62] opacity-80 rounded-xl shadow-sm p-4 hover:shadow-md transition">
+            <a href="{{ route('complaints.show', 1) }}" class="block bg-white border-l-4 border-[#30BF62] opacity-80 rounded-xl shadow-sm p-4 hover:shadow-md transition">
                 <div class="flex justify-between items-start mb-2">
                     <span class="text-xs font-bold text-gray-500">Communal Area</span>
                     <span class="text-xs text-gray-400">5 days ago</span>

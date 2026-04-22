@@ -46,7 +46,7 @@
                         </ul>
                     </div>
                     
-                    <a href="/rooms/1" class="block w-full text-center border border-[#035949] text-[#035949] hover:bg-[#035949] hover:text-white rounded-xl px-4 py-2 transition duration-200">View Detail</a>
+                    <a href="{{ route('rooms.show', 1) }}" class="block w-full text-center border border-[#035949] text-[#035949] hover:bg-[#035949] hover:text-white rounded-xl px-4 py-2 transition duration-200">View Detail</a>
                 </div>
             </div>
             @endfor

@@ -51,13 +51,13 @@
                 </label>
             </div>
 
-            <button type="button" onclick="window.location.href='/login'" class="w-full bg-[#30BF62] text-white hover:bg-[#188C4A] rounded-xl px-4 py-3 font-semibold transition duration-200">
+            <button type="button" onclick="window.location.href='{{ route('login') }}'" class="w-full bg-[#30BF62] text-white hover:bg-[#188C4A] rounded-xl px-4 py-3 font-semibold transition duration-200">
                 Create Account
             </button>
         </form>
 
         <p class="text-center text-sm text-gray-500 mt-8">
-            Already have an account? <a href="/login" class="text-[#188C4A] hover:text-[#035949] font-medium transition">Sign in</a>
+            Already have an account? <a href="{{ route('login') }}" class="text-[#188C4A] hover:text-[#035949] font-medium transition">Sign in</a>
         </p>
     </div>
 </div>

@@ -35,7 +35,7 @@
                 <div>
                     <div class="flex justify-between items-center mb-1">
                         <label class="block text-sm font-medium text-gray-700">Password</label>
-                        <a href="/forgot-password" class="text-xs text-[#188C4A] hover:text-[#035949] font-medium transition">Forgot password?</a>
+                        <a href="{{ route('password.request') }}" class="text-xs text-[#188C4A] hover:text-[#035949] font-medium transition">Forgot password?</a>
                     </div>
                     <input type="password" placeholder="••••••••" class="w-full border border-gray-300 rounded-xl px-4 py-2 focus:ring-2 focus:ring-[#30BF62] focus:border-transparent transition" required>
                 </div>
@@ -43,13 +43,13 @@
                     <input type="checkbox" id="remember" class="w-4 h-4 text-[#30BF62] border-gray-300 rounded focus:ring-[#30BF62]">
                     <label for="remember" class="ml-2 block text-sm text-gray-700">Remember me</label>
                 </div>
-                <button type="button" onclick="window.location.href='/dashboard'" class="w-full bg-[#30BF62] text-white hover:bg-[#188C4A] rounded-xl px-4 py-2 font-semibold transition duration-200">
+                <button type="button" onclick="window.location.href='{{ route('dashboard.index') }}'" class="w-full bg-[#30BF62] text-white hover:bg-[#188C4A] rounded-xl px-4 py-2 font-semibold transition duration-200">
                     Sign In
                 </button>
             </form>
             
             <p class="text-center text-sm text-gray-500 mt-6">
-                Don't have an account? <a href="/register" class="text-[#188C4A] hover:text-[#035949] font-medium transition">Sign up</a>
+                Don't have an account? <a href="{{ route('register') }}" class="text-[#188C4A] hover:text-[#035949] font-medium transition">Sign up</a>
             </p>
 
             <div class="mt-8 bg-gray-50 rounded-xl p-4 border border-gray-200 text-sm">

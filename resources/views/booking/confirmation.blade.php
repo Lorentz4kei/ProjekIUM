@@ -32,7 +32,7 @@
             </div>
 
             <div class="flex flex-col sm:flex-row justify-center gap-4">
-                <a href="/booking/status" class="bg-[#30BF62] text-white hover:bg-[#188C4A] px-6 py-2.5 rounded-xl font-medium transition duration-200">
+                <a href="{{ route('booking.status') }}" class="bg-[#30BF62] text-white hover:bg-[#188C4A] px-6 py-2.5 rounded-xl font-medium transition duration-200">
                     Track Status
                 </a>
                 <button class="border border-[#035949] text-[#035949] hover:bg-[#035949] hover:text-white px-6 py-2.5 rounded-xl font-medium transition duration-200 flex items-center justify-center">

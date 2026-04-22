@@ -76,7 +76,7 @@
                 </div>
                 
                 <div class="mt-6 flex justify-end">
-                    <button type="button" onclick="window.location.href='/booking/upload-dp'" class="bg-[#30BF62] text-white hover:bg-[#188C4A] px-8 py-3 rounded-xl font-bold transition duration-200 shadow-md">
+                    <button type="button" onclick="window.location.href='{{ route('booking.upload-dp') }}'" class="bg-[#30BF62] text-white hover:bg-[#188C4A] px-8 py-3 rounded-xl font-bold transition duration-200 shadow-md">
                         Continue to Payment
                     </button>
                 </div>

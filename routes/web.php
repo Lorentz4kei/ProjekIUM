@@ -18,107 +18,123 @@ use Illuminate\Support\Facades\Route;
 // ==========================================
 Route::get('/', function () {
     return view('home.index');
-});
+})->name('home');
+
 Route::get('/rooms', function () {
     return view('home.rooms');
-});
-Route::view('/rooms/1', 'home.room-detail');
+})->name('rooms');
+
+Route::get('/rooms/{id}', function ($id) {
+    return view('home.room-detail');
+})->name('rooms.show');
 
 
 // ==========================================
 // 2. AUTH PAGES
 // ==========================================
-Route::view('/login', 'auth.login');
-Route::view('/register', 'auth.register');
-Route::view('/forgot-password', 'auth.forgot-password');
+Route::view('/login', 'auth.login')->name('login');
+Route::view('/register', 'auth.register')->name('register');
+Route::view('/forgot-password', 'auth.forgot-password')->name('password.request');
+Route::post('/logout', function () {
+    // kalau belum pakai auth system, minimal redirect dulu
+    return redirect()->route('home');
+})->name('logout');
 
 
 // ==========================================
 // 3. BOOKING (Tenant perspective)
 // ==========================================
-Route::prefix('booking')->group(function () {
-    Route::view('/create', 'booking.create');
-    Route::view('/upload-dp', 'booking.upload-dp');
-    Route::view('/confirmation', 'booking.confirmation');
-    Route::view('/status', 'booking.status');
+Route::prefix('booking')->name('booking.')->group(function () {
+    Route::view('/create', 'booking.create')->name('create');
+    Route::view('/upload-dp', 'booking.upload-dp')->name('upload-dp');
+    Route::view('/confirmation', 'booking.confirmation')->name('confirmation');
+    Route::view('/status', 'booking.status')->name('status');
 });
 
 
 // ==========================================
 // 4. OWNER DASHBOARD
 // ==========================================
-Route::prefix('dashboard')->group(function () {
-    Route::view('/', 'dashboard.index');
-    Route::view('/rooms', 'dashboard.rooms');
-    Route::view('/room-form', 'dashboard.room-form');
+Route::prefix('dashboard')->name('dashboard.')->group(function () {
+    Route::view('/', 'dashboard.index')->name('index');
+    Route::view('/rooms', 'dashboard.rooms')->name('rooms');
+    Route::view('/room-form', 'dashboard.room-form')->name('room-form');
 });
 
 
 // ==========================================
 // 5. TENANT MANAGEMENT
 // ==========================================
-Route::prefix('tenants')->group(function () {
-    Route::view('/', 'tenants.index');
-    Route::view('/create', 'tenants.create');
-    Route::view('/contract', 'tenants.contract');
-    Route::view('/{id}', 'tenants.show');
-    Route::view('/{id}/edit', 'tenants.edit');
+Route::prefix('tenants')->name('tenants.')->group(function () {
+    Route::view('/', 'tenants.index')->name('index');
+    Route::view('/create', 'tenants.create')->name('create');
+    Route::view('/contract', 'tenants.contract')->name('contract');
+    Route::get('/{id}', function ($id) {
+        return view('tenants.show');
+    })->name('show');
+    Route::get('/{id}/edit', function ($id) {
+        return view('tenants.edit');
+    })->name('edit');
 });
 
 
 // ==========================================
 // 6. PAYMENTS
 // ==========================================
-Route::prefix('payments')->group(function () {
-    Route::view('/', 'payments.index');
-    Route::view('/upload', 'payments.upload');
-    Route::view('/verify', 'payments.verify');
-    Route::view('/qris', 'payments.qris');
-    Route::view('/{id}', 'payments.show');
+Route::prefix('payments')->name('payments.')->group(function () {
+    Route::view('/', 'payments.index')->name('index');
+    Route::view('/upload', 'payments.upload')->name('upload');
+    Route::view('/verify', 'payments.verify')->name('verify');
+    Route::view('/qris', 'payments.qris')->name('qris');
+    Route::get('/{id}', function ($id) {
+        return view('payments.show');
+    })->name('show');
 });
 
 
 // ==========================================
 // 7. REMINDERS
 // ==========================================
-Route::prefix('reminders')->group(function () {
-    Route::view('/', 'reminders.index');
-    Route::view('/settings', 'reminders.settings');
+Route::prefix('reminders')->name('reminders.')->group(function () {
+    Route::view('/', 'reminders.index')->name('index');
+    Route::view('/settings', 'reminders.settings')->name('settings');
 });
 
 
 // ==========================================
 // 8. REPORTS
 // ==========================================
-Route::prefix('reports')->group(function () {
-    Route::view('/', 'reports.index');
-    Route::view('/income', 'reports.income');
-    Route::view('/occupancy', 'reports.occupancy');
+Route::prefix('reports')->name('reports.')->group(function () {
+    Route::view('/', 'reports.index')->name('index');
+    Route::view('/income', 'reports.income')->name('income');
+    Route::view('/occupancy', 'reports.occupancy')->name('occupancy');
 });
 
 
 // ==========================================
 // 9. COMPLAINTS
 // ==========================================
-Route::prefix('complaints')->group(function () {
-    Route::view('/', 'complaints.index');
-    Route::view('/create', 'complaints.create');
-    Route::view('/my-complaints', 'complaints.my-complaints');
-    Route::view('/{id}', 'complaints.show');
+Route::prefix('complaints')->name('complaints.')->group(function () {
+    Route::view('/', 'complaints.index')->name('index');
+    Route::view('/create', 'complaints.create')->name('create');
+    Route::view('/my-complaints', 'complaints.my-complaints')->name('my');
+    Route::get('/{id}', function ($id) {
+        return view('complaints.show');
+    })->name('show');
 });
 
 
 // ==========================================
 // 10. PROFILE
 // ==========================================
-Route::prefix('profile')->group(function () {
-    Route::view('/', 'profile.index');
-    Route::view('/edit', 'profile.edit');
+Route::prefix('profile')->name('profile.')->group(function () {
+    Route::view('/', 'profile.index')->name('index');
+    Route::view('/edit', 'profile.edit')->name('edit');
 });
 
 
 // ==========================================
 // 11. ERROR PAGES (Simulations)
 // ==========================================
-Route::view('/404-demo', 'errors.404');
-Route::view('/403-demo', 'errors.403');
+Route::view('/404-demo', 'errors.404')->name('errors.404');
+Route::view('/403-demo', 'errors.403')->name('errors.403');

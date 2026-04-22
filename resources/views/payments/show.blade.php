@@ -4,7 +4,7 @@
 
 @section('content')
 <div class="max-w-3xl mx-auto">
-    <a href="/payments" class="text-sm font-medium text-gray-500 hover:text-[#012619] inline-flex items-center mb-6">
+    <a href="{{ route('payments.index') }}" class="text-sm font-medium text-gray-500 hover:text-[#012619] inline-flex items-center mb-6">
         <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18" /></svg> Back to Payments
     </a>
 

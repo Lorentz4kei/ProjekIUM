@@ -14,7 +14,7 @@
         </select>
     </div>
     
-    <a href="/dashboard/room-form" class="bg-[#30BF62] text-white hover:bg-[#188C4A] rounded-xl px-4 py-2 font-medium transition duration-200 shadow-sm flex items-center w-full sm:w-auto justify-center">
+    <a href="{{ route('dashboard.room-form') }}" class="bg-[#30BF62] text-white hover:bg-[#188C4A] rounded-xl px-4 py-2 font-medium transition duration-200 shadow-sm flex items-center w-full sm:w-auto justify-center">
         <svg class="w-5 h-5 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/></svg>
         Add New Room
     </a>
@@ -49,7 +49,7 @@
             @endif
 
             <div class="mt-auto pt-4 border-t border-gray-100 flex justify-between space-x-2">
-                <a href="/dashboard/room-form" class="flex-1 text-center border border-[#035949] text-[#035949] hover:bg-[#035949] hover:text-white rounded-xl px-2 py-1.5 text-sm font-medium transition duration-200">Edit</a>
+                <a href="{{ route('dashboard.room-form') }}" class="flex-1 text-center border border-[#035949] text-[#035949] hover:bg-[#035949] hover:text-white rounded-xl px-2 py-1.5 text-sm font-medium transition duration-200">Edit</a>
                 <button class="flex-none bg-red-50 text-red-600 hover:bg-red-500 hover:text-white rounded-xl px-3 py-1.5 transition duration-200" title="Delete">
                     <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" /></svg>
                 </button>
