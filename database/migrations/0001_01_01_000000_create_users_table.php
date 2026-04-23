@@ -17,9 +17,16 @@ return new class extends Migration
             $table->string('email')->unique();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
+
+            // --- EDIT/TAMBAHKAN DI SINI ---
+            $table->string('role')->default('tenant'); // Ubah 'user' jadi 'tenant' agar sinkron dengan logic kita
+            $table->string('phone')->nullable();       // Tambahkan kolom phone
+            // ------------------------------
+
             $table->rememberToken();
             $table->timestamps();
         });
+
 
         Schema::create('password_reset_tokens', function (Blueprint $table) {
             $table->string('email')->primary();

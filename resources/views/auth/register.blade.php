@@ -9,38 +9,48 @@
             <p class="text-gray-500 mt-2">Join e-Kost to find your perfect room or manage your property.</p>
         </div>
         
-        <form action="#" method="POST" class="space-y-6">
+        <form action="{{ route('register.post') }}" method="POST" class="space-y-6">
             @csrf
+            
+            @if ($errors->any())
+                <div class="bg-red-50 text-red-500 p-4 rounded-xl text-sm">
+                    <ul class="list-disc pl-5">
+                        @foreach ($errors->all() as $error)
+                            <li>{{ $error }}</li>
+                        @endforeach
+                    </ul>
+                </div>
+            @endif
             
             <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div>
                     <label class="block text-sm font-medium text-gray-700 mb-1">First Name</label>
-                    <input type="text" placeholder="John" class="w-full border border-gray-300 rounded-xl px-4 py-2 focus:ring-2 focus:ring-[#30BF62] focus:border-transparent transition" required>
+                    <input type="text" name="first_name" value="{{ old('first_name') }}" placeholder="John" class="w-full border border-gray-300 rounded-xl px-4 py-2 focus:ring-2 focus:ring-[#30BF62] focus:border-transparent transition" required>
                 </div>
                 <div>
                     <label class="block text-sm font-medium text-gray-700 mb-1">Last Name</label>
-                    <input type="text" placeholder="Doe" class="w-full border border-gray-300 rounded-xl px-4 py-2 focus:ring-2 focus:ring-[#30BF62] focus:border-transparent transition" required>
+                    <input type="text" name="last_name" value="{{ old('last_name') }}" placeholder="Doe" class="w-full border border-gray-300 rounded-xl px-4 py-2 focus:ring-2 focus:ring-[#30BF62] focus:border-transparent transition" required>
                 </div>
             </div>
 
             <div>
                 <label class="block text-sm font-medium text-gray-700 mb-1">Email Address</label>
-                <input type="email" placeholder="john.doe@example.com" class="w-full border border-gray-300 rounded-xl px-4 py-2 focus:ring-2 focus:ring-[#30BF62] focus:border-transparent transition" required>
+                <input type="email" name="email" value="{{ old('email') }}" placeholder="john.doe@example.com" class="w-full border border-gray-300 rounded-xl px-4 py-2 focus:ring-2 focus:ring-[#30BF62] focus:border-transparent transition" required>
             </div>
 
             <div>
                 <label class="block text-sm font-medium text-gray-700 mb-1">Phone Number</label>
-                <input type="tel" placeholder="+62 812 3456 7890" class="w-full border border-gray-300 rounded-xl px-4 py-2 focus:ring-2 focus:ring-[#30BF62] focus:border-transparent transition" required>
+                <input type="tel" name="phone" value="{{ old('phone') }}" placeholder="+62 812 3456 7890" class="w-full border border-gray-300 rounded-xl px-4 py-2 focus:ring-2 focus:ring-[#30BF62] focus:border-transparent transition" required>
             </div>
             
             <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div>
                     <label class="block text-sm font-medium text-gray-700 mb-1">Password</label>
-                    <input type="password" placeholder="••••••••" class="w-full border border-gray-300 rounded-xl px-4 py-2 focus:ring-2 focus:ring-[#30BF62] focus:border-transparent transition" required>
+                    <input type="password" name="password" placeholder="••••••••" class="w-full border border-gray-300 rounded-xl px-4 py-2 focus:ring-2 focus:ring-[#30BF62] focus:border-transparent transition" required>
                 </div>
                 <div>
                     <label class="block text-sm font-medium text-gray-700 mb-1">Confirm Password</label>
-                    <input type="password" placeholder="••••••••" class="w-full border border-gray-300 rounded-xl px-4 py-2 focus:ring-2 focus:ring-[#30BF62] focus:border-transparent transition" required>
+                    <input type="password" name="password_confirmation" placeholder="••••••••" class="w-full border border-gray-300 rounded-xl px-4 py-2 focus:ring-2 focus:ring-[#30BF62] focus:border-transparent transition" required>
                 </div>
             </div>
 
@@ -51,7 +61,7 @@
                 </label>
             </div>
 
-            <button type="button" onclick="window.location.href='{{ route('login') }}'" class="w-full bg-[#30BF62] text-white hover:bg-[#188C4A] rounded-xl px-4 py-3 font-semibold transition duration-200">
+            <button type="submit" class="w-full bg-[#30BF62] text-white hover:bg-[#188C4A] rounded-xl px-4 py-3 font-semibold transition duration-200">
                 Create Account
             </button>
         </form>

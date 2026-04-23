@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Rental Contract - John Smith</title>
+    <title>Rental Contract - {{ $tenant->name }}</title>
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
@@ -33,12 +33,14 @@
         <h2 class="text-xl font-bold text-center underline uppercase mb-8">Room Rental Agreement</h2>
 
         <p class="text-justify mb-4 leading-relaxed">
-            This Room Rental Agreement (the "Agreement") is made and entered into on this <strong>10th day of January, 2026</strong>, by and between:
+        This Room Rental Agreement (the "Agreement") is made and entered into on this
+        <strong>{{ $tenant->start_date->format('jS \d\a\y \o\f F, Y') }}</strong>, by and between:
         </p>
 
         <div class="mb-6 pl-4 space-y-2">
             <p><strong>1. Landlord:</strong> e-Kost Management Representative.</p>
-            <p><strong>2. Tenant:</strong> John Smith (ID: 32710123456789), residing at Dummy Address, City.</p>
+            <p><strong>2. Tenant:</strong> {{ $tenant->name }} (ID: {{ $tenant->nik }}), residing at
+                {{ $tenant->emergency_contact ?? '-' }}.</p>
         </div>
 
         <p class="text-justify mb-4 leading-relaxed">
@@ -47,17 +49,22 @@
 
         <h3 class="font-bold text-lg mt-6 mb-2">1. The Premises</h3>
         <p class="text-justify mb-4 leading-relaxed pl-4">
-            The Landlord agrees to rent to the Tenant the room known as <strong>Room 101 (Standard)</strong> located at Mapple Street No. 4.
+            The Landlord agrees to rent to the Tenant the room known as <strong>Room {{ $tenant->room->room_number }}
+                ({{ $tenant->room->type }})</strong> located at Mapple Street No. 4.
         </p>
 
         <h3 class="font-bold text-lg mt-6 mb-2">2. Term of Lease</h3>
         <p class="text-justify mb-4 leading-relaxed pl-4">
-            The lease shall commence on <strong>10/01/2026</strong> and end on <strong>10/01/2027</strong> (Duration: 12 Months).
+            The lease shall commence on <strong>{{ $tenant->start_date->format('d/m/Y') }}</strong> and end on
+            <strong>{{ $tenant->end_date->format('d/m/Y') }}</strong> (Duration: {{ $tenant->duration }} Months).
         </p>
 
         <h3 class="font-bold text-lg mt-6 mb-2">3. Rent and Payment</h3>
         <p class="text-justify mb-4 leading-relaxed pl-4">
-            The Tenant agrees to pay the Landlord a monthly rent of <strong>Rp 1,500,000</strong>. Payment must be made by the 10th of every month. Initial total deposit and first month payment of Rp 3,000,000 has been received.
+            TThe Tenant agrees to pay the Landlord a monthly rent of <strong>Rp
+                {{ number_format($tenant->room->price, 0, ',', '.') }}</strong>. Payment must be made by the
+            {{ $tenant->start_date->format('j') }}th of every month. Initial total deposit and first month payment of Rp
+            {{ number_format($tenant->room->price * 2, 0, ',', '.') }} has been received.
         </p>
 
         <h3 class="font-bold text-lg mt-6 mb-2">4. Terms and Conditions</h3>
@@ -80,8 +87,8 @@
             </div>
             <div class="text-center">
                 <p class="mb-20"><strong>Tenant</strong></p>
-                <p class="underline font-bold">John Smith</p>
-                <p class="text-sm">( ID: 32710123456789 )</p>
+                <p class="underline font-bold">{{ $tenant->name }}</p>
+                <p class="text-sm">( ID: {{ $tenant->nik }} )</p>
             </div>
         </div>
 

@@ -1,140 +1,141 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\AuthController;
+use App\Http\Controllers\Admin\DashboardController;
+use App\Http\Controllers\Admin\RoomController;
+use App\Http\Controllers\Admin\TenantController;
+use App\Http\Controllers\Admin\PaymentController as AdminPaymentController;
+use App\Http\Controllers\HomeController;
+use App\Http\Controllers\TenantPaymentController;
+use Illuminate\Http\Request;
 
-/*
-|--------------------------------------------------------------------------
-| Web Routes
-|--------------------------------------------------------------------------
-|
-| Here is where you can register web routes for your application. These
-| routes are loaded by the RouteServiceProvider and all of them will
-| be assigned to the "web" middleware group. Make something great!
-|
-*/
-
-// ==========================================
+// ============================================================
 // 1. PUBLIC PAGES
-// ==========================================
-Route::get('/', function () {
-    return view('home.index');
-})->name('home');
+// ============================================================
+Route::get('/', [HomeController::class, 'index'])->name('home');
+Route::get('/rooms', [HomeController::class, 'rooms'])->name('rooms');
+Route::get('/rooms/{id}', [HomeController::class, 'roomDetail'])->name('rooms.show');
 
-Route::get('/rooms', function () {
-    return view('home.rooms');
-})->name('rooms');
-
-Route::get('/rooms/{id}', function ($id) {
-    return view('home.room-detail');
-})->name('rooms.show');
-
-
-// ==========================================
+// ============================================================
 // 2. AUTH PAGES
-// ==========================================
+// ============================================================
 Route::view('/login', 'auth.login')->name('login');
+Route::post('/login', [AuthController::class, 'authenticate'])->name('login.post')->middleware('throttle:5,1');
 Route::view('/register', 'auth.register')->name('register');
+Route::post('/register', [AuthController::class, 'register'])->name('register.post');
 Route::view('/forgot-password', 'auth.forgot-password')->name('password.request');
-Route::post('/logout', function () {
-    // kalau belum pakai auth system, minimal redirect dulu
-    return redirect()->route('home');
-})->name('logout');
+Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 
+// 2.1 EMAIL VERIFICATION
+Route::middleware('auth')->group(function () {
+    Route::view('/email/verify', 'auth.verify-email')->name('verification.notice');
 
-// ==========================================
-// 3. BOOKING (Tenant perspective)
-// ==========================================
-Route::prefix('booking')->name('booking.')->group(function () {
-    Route::view('/create', 'booking.create')->name('create');
-    Route::view('/upload-dp', 'booking.upload-dp')->name('upload-dp');
-    Route::view('/confirmation', 'booking.confirmation')->name('confirmation');
-    Route::view('/status', 'booking.status')->name('status');
+    Route::get('/email/verify/{id}/{hash}', function (Request $request) {
+        return redirect()->route('home')->with('success', 'Email berhasil diverifikasi!');
+    })->middleware(['signed', 'throttle:6,1'])->name('verification.verify');
+
+    Route::post('/email/resend', function (Request $request) {
+        $request->user()->sendEmailVerificationNotification();
+        return back()->with('success', 'Link verifikasi telah dikirim ulang ke email Anda.');
+    })->middleware('throttle:6,1')->name('verification.send');
 });
 
+// ============================================================
+// WEBHOOK MIDTRANS (di luar auth, tidak perlu CSRF)
+// ============================================================
+Route::post('/payments/webhook', [TenantPaymentController::class, 'webhook'])->name('payments.webhook');
 
-// ==========================================
-// 4. OWNER DASHBOARD
-// ==========================================
-Route::prefix('dashboard')->name('dashboard.')->group(function () {
-    Route::view('/', 'dashboard.index')->name('index');
-    Route::view('/rooms', 'dashboard.rooms')->name('rooms');
-    Route::view('/room-form', 'dashboard.room-form')->name('room-form');
+// ============================================================
+// 3. PROTECTED ROUTES
+// ============================================================
+Route::middleware(['auth', 'verified'])->group(function () {
+
+    // --- BOOKING (Tenant) ---
+    Route::prefix('booking')->name('booking.')->group(function () {
+        Route::view('/create',       'booking.create')->name('create');
+        Route::view('/upload-dp',    'booking.upload-dp')->name('upload-dp');
+        Route::view('/confirmation', 'booking.confirmation')->name('confirmation');
+        Route::view('/status',       'booking.status')->name('status');
+    });
+
+    // --- PAYMENTS (Tenant) ---
+    Route::prefix('payments')->name('payments.')->group(function () {
+        Route::get('/',            [TenantPaymentController::class, 'index'])      ->name('index');
+        Route::get('/my-payments', [TenantPaymentController::class, 'myPayments']) ->name('my');
+        Route::get('/{id}/pay',    [TenantPaymentController::class, 'pay'])        ->name('pay');
+        Route::get('/{id}',        [TenantPaymentController::class, 'show'])       ->name('show');
+    });
+
+    // --- COMPLAINTS (Tenant) ---
+    Route::prefix('complaints')->name('complaints.')->group(function () {
+        Route::view('/',              'complaints.index')->name('index');
+        Route::view('/create',        'complaints.create')->name('create');
+        Route::view('/my-complaints', 'complaints.my-complaints')->name('my');
+        Route::get('/{id}', function ($id) {
+            return view('complaints.show');
+        })->name('show');
+    });
+
+    // --- PROFILE (Tenant) ---
+    Route::prefix('profile')->name('profile.')->group(function () {
+        Route::view('/',      'profile.index')->name('index');
+        Route::view('/edit',  'profile.edit')->name('edit');
+    });
+
+    // ============================================================
+    // ADMIN ONLY ROUTES
+    // ============================================================
+    Route::middleware(['admin'])->prefix('admin')->group(function () {
+
+        // Dashboard
+        Route::get('/', [DashboardController::class, 'index'])->name('dashboard.index');
+
+        // Rooms
+        Route::prefix('rooms')->name('dashboard.rooms')->group(function () {
+            Route::get('/',          [RoomController::class, 'index'])  ->name('');
+            Route::get('/create',    [RoomController::class, 'create']) ->name('.form');
+            Route::post('/',         [RoomController::class, 'store'])  ->name('.store');
+            Route::get('/{id}/edit', [RoomController::class, 'edit'])   ->name('.edit');
+            Route::put('/{id}',      [RoomController::class, 'update']) ->name('.update');
+            Route::delete('/{id}',   [RoomController::class, 'destroy'])->name('.destroy');
+        });
+
+        // Tenants
+        Route::prefix('tenants')->name('tenants.')->group(function () {
+            Route::get('/',              [TenantController::class, 'index'])   ->name('index');
+            Route::get('/create',        [TenantController::class, 'create'])  ->name('create');
+            Route::post('/',             [TenantController::class, 'store'])   ->name('store');
+            Route::get('/{id}',          [TenantController::class, 'show'])    ->name('show');
+            Route::get('/{id}/edit',     [TenantController::class, 'edit'])    ->name('edit');
+            Route::put('/{id}',          [TenantController::class, 'update'])  ->name('update');
+            Route::delete('/{id}',       [TenantController::class, 'destroy']) ->name('destroy');
+            Route::get('/{id}/contract', [TenantController::class, 'contract'])->name('contract');
+        });
+
+        // Payments (Admin)
+        Route::prefix('payments')->name('admin.payments.')->group(function () {
+            Route::get('/',    [AdminPaymentController::class, 'index']) ->name('index');
+            Route::get('/{id}',[AdminPaymentController::class, 'show'])  ->name('show');
+        });
+
+        // Reminders
+        Route::prefix('reminders')->name('reminders.')->group(function () {
+            Route::view('/',         'reminders.index')->name('index');
+            Route::view('/settings', 'reminders.settings')->name('settings');
+        });
+
+        // Reports
+        Route::prefix('reports')->name('reports.')->group(function () {
+            Route::view('/',          'reports.index')->name('index');
+            Route::view('/income',    'reports.income')->name('income');
+            Route::view('/occupancy', 'reports.occupancy')->name('occupancy');
+        });
+    });
 });
 
-
-// ==========================================
-// 5. TENANT MANAGEMENT
-// ==========================================
-Route::prefix('tenants')->name('tenants.')->group(function () {
-    Route::view('/', 'tenants.index')->name('index');
-    Route::view('/create', 'tenants.create')->name('create');
-    Route::view('/contract', 'tenants.contract')->name('contract');
-    Route::get('/{id}', function ($id) {
-        return view('tenants.show');
-    })->name('show');
-    Route::get('/{id}/edit', function ($id) {
-        return view('tenants.edit');
-    })->name('edit');
-});
-
-
-// ==========================================
-// 6. PAYMENTS
-// ==========================================
-Route::prefix('payments')->name('payments.')->group(function () {
-    Route::view('/', 'payments.index')->name('index');
-    Route::view('/upload', 'payments.upload')->name('upload');
-    Route::view('/verify', 'payments.verify')->name('verify');
-    Route::view('/qris', 'payments.qris')->name('qris');
-    Route::get('/{id}', function ($id) {
-        return view('payments.show');
-    })->name('show');
-});
-
-
-// ==========================================
-// 7. REMINDERS
-// ==========================================
-Route::prefix('reminders')->name('reminders.')->group(function () {
-    Route::view('/', 'reminders.index')->name('index');
-    Route::view('/settings', 'reminders.settings')->name('settings');
-});
-
-
-// ==========================================
-// 8. REPORTS
-// ==========================================
-Route::prefix('reports')->name('reports.')->group(function () {
-    Route::view('/', 'reports.index')->name('index');
-    Route::view('/income', 'reports.income')->name('income');
-    Route::view('/occupancy', 'reports.occupancy')->name('occupancy');
-});
-
-
-// ==========================================
-// 9. COMPLAINTS
-// ==========================================
-Route::prefix('complaints')->name('complaints.')->group(function () {
-    Route::view('/', 'complaints.index')->name('index');
-    Route::view('/create', 'complaints.create')->name('create');
-    Route::view('/my-complaints', 'complaints.my-complaints')->name('my');
-    Route::get('/{id}', function ($id) {
-        return view('complaints.show');
-    })->name('show');
-});
-
-
-// ==========================================
-// 10. PROFILE
-// ==========================================
-Route::prefix('profile')->name('profile.')->group(function () {
-    Route::view('/', 'profile.index')->name('index');
-    Route::view('/edit', 'profile.edit')->name('edit');
-});
-
-
-// ==========================================
-// 11. ERROR PAGES (Simulations)
-// ==========================================
+// ============================================================
+// 4. ERROR PAGES
+// ============================================================
 Route::view('/404-demo', 'errors.404')->name('errors.404');
 Route::view('/403-demo', 'errors.403')->name('errors.403');

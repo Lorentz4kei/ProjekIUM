@@ -43,7 +43,7 @@
             <div class="relative" x-data="{ open: false }" @click.outside="open = false">
                 <button @click="open = !open" class="flex items-center space-x-2 focus:outline-none rounded-full ring-2 ring-transparent focus:ring-[#30BF62] transition duration-200 p-1">
                     <img class="h-8 w-8 rounded-full border border-gray-200 object-cover" src="https://placehold.co/100x100?text=US" alt="User avatar">
-                    <span class="text-sm font-medium text-gray-700 hidden sm:block">Budi Santoso</span>
+                    <span class="text-sm font-medium text-gray-700 hidden sm:block">{{ Auth::user()->name }}</span>
                     <svg class="w-4 h-4 text-gray-500 hidden sm:block" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
                     </svg>
@@ -60,8 +60,8 @@
                      class="absolute right-0 mt-2 w-48 bg-white rounded-xl shadow-lg border border-gray-100 py-1 z-50 ring-1 ring-black ring-opacity-5" 
                      x-cloak>
                     <div class="px-4 py-2 border-b border-gray-100 sm:hidden">
-                        <p class="text-sm font-medium text-gray-900">Budi Santoso</p>
-                        <p class="text-xs text-gray-500">user@example.com</p>
+                        <p class="text-sm font-medium text-gray-900">{{ Auth::user()->name }}</p>
+                        <p class="text-xs text-gray-500">{{ Auth::user()->email }}</p>
                     </div>
                     <a href="{{ route('profile.index') }}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-50 hover:text-[#035949] transition duration-200">Your Profile</a>
                     <a href="{{ route('profile.edit') }}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-50 hover:text-[#035949] transition duration-200">Settings</a>
