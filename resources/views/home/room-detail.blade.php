@@ -104,9 +104,10 @@
                                 </select>
                             </div>
 
-                            <button type="button" onclick="window.location.href='{{ route('booking.create') }}'" class="w-full bg-[#30BF62] text-white py-3 rounded-xl font-bold text-lg hover:bg-[#188C4A] shadow-md hover:shadow-lg transition duration-200 mt-6">
+                            <a href="{{ route('booking.create', ['room_id' => $room->id]) }}"
+                                class="w-full bg-[#30BF62] text-white py-3 rounded-xl font-bold text-lg hover:bg-[#188C4A] shadow-md hover:shadow-lg transition duration-200 mt-6 block text-center">
                                 Book Now
-                            </button>
+                            </a>
                         </form>
 
                         <div class="mt-4 flex items-start text-sm text-gray-500 bg-gray-50 p-3 rounded-xl border border-gray-100">

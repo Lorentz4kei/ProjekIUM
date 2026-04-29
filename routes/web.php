@@ -9,6 +9,8 @@ use App\Http\Controllers\Admin\PaymentController as AdminPaymentController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\TenantPaymentController;
 use Illuminate\Http\Request;
+use App\Http\Controllers\BookingController;
+use App\Http\Controllers\Admin\BookingController as AdminBookingController;
 
 // ============================================================
 // 1. PUBLIC PAGES
@@ -46,6 +48,10 @@ Route::middleware('auth')->group(function () {
 // ============================================================
 Route::post('/payments/webhook', [TenantPaymentController::class, 'webhook'])->name('payments.webhook');
 
+Route::post('/booking/webhook', [BookingController::class, 'webhook'])->name('booking.webhook');
+
+
+
 // ============================================================
 // 3. PROTECTED ROUTES
 // ============================================================
@@ -53,11 +59,12 @@ Route::middleware(['auth', 'verified'])->group(function () {
 
     // --- BOOKING (Tenant) ---
     Route::prefix('booking')->name('booking.')->group(function () {
-        Route::view('/create',       'booking.create')->name('create');
-        Route::view('/upload-dp',    'booking.upload-dp')->name('upload-dp');
-        Route::view('/confirmation', 'booking.confirmation')->name('confirmation');
-        Route::view('/status',       'booking.status')->name('status');
-    });
+    Route::get('/create',               [BookingController::class, 'create'])      ->name('create');
+    Route::post('/store',               [BookingController::class, 'store'])       ->name('store');
+    Route::get('/upload-dp/{booking}',  [BookingController::class, 'uploadDp'])   ->name('upload-dp');
+    Route::get('/confirmation/{booking}',[BookingController::class, 'confirmation'])->name('confirmation');
+    Route::get('/status',               [BookingController::class, 'status'])      ->name('status');
+});
 
     // --- PAYMENTS (Tenant) ---
     Route::prefix('payments')->name('payments.')->group(function () {
@@ -118,6 +125,13 @@ Route::middleware(['auth', 'verified'])->group(function () {
             Route::get('/',    [AdminPaymentController::class, 'index']) ->name('index');
             Route::get('/{id}',[AdminPaymentController::class, 'show'])  ->name('show');
         });
+
+        Route::prefix('bookings')->name('admin.bookings.')->group(function () {
+    Route::get('/',           [AdminBookingController::class, 'index'])  ->name('index');
+    Route::get('/{id}',       [AdminBookingController::class, 'show'])   ->name('show');
+    Route::post('/{id}/approve', [AdminBookingController::class, 'approve'])->name('approve');
+    Route::post('/{id}/reject',  [AdminBookingController::class, 'reject']) ->name('reject');
+});
 
         // Reminders
         Route::prefix('reminders')->name('reminders.')->group(function () {

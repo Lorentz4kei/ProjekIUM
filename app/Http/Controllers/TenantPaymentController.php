@@ -14,13 +14,13 @@ use Midtrans\Notification;
 class TenantPaymentController extends Controller
 {
     public function __construct()
-    {
-        Config::$serverKey    = config('services.midtrans.server_key');
-        Config::$clientKey    = config('services.midtrans.client_key');
-        Config::$isProduction = config('services.midtrans.is_production');
-        Config::$isSanitized  = config('services.midtrans.is_sanitized');
-        Config::$is3ds        = config('services.midtrans.is_3ds');
-    }
+{
+    \Midtrans\Config::$serverKey    = env('MIDTRANS_SERVER_KEY');
+    \Midtrans\Config::$clientKey    = env('MIDTRANS_CLIENT_KEY');
+    \Midtrans\Config::$isProduction = env('MIDTRANS_IS_PRODUCTION', false);
+    \Midtrans\Config::$isSanitized  = env('MIDTRANS_IS_SANITIZED', true);
+    \Midtrans\Config::$is3ds        = env('MIDTRANS_IS_3DS', true);
+}
 
     
     // INDEX - tenant lihat tagihan sendiri

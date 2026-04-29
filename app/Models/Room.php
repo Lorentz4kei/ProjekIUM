@@ -31,4 +31,10 @@ public function activeTenant()
 {
     return $this->hasOne(Tenant::class)->where('status', 'active');
 }
+
+public function bookings()
+{
+    return $this->hasMany(Booking::class);
+}
+
 }
